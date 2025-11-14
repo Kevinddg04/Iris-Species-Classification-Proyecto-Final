@@ -1,0 +1,6 @@
+# Dependencias principales para el proyecto Iris Species Classification
+streamlit==1.32.0
+pandas
+numpy
+scikit-learn
+plotly
