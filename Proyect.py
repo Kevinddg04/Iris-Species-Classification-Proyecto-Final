@@ -18,6 +18,7 @@ from sklearn.metrics import (
 import plotly.express as px
 import plotly.graph_objects as go
 import pickle
+import io
 
 # ============================================================
 # Carga del dataset
@@ -152,12 +153,18 @@ with col1:
     st.plotly_chart(fig_cm, use_container_width=True)
 
     # Guardar modelo
-    if st.button("Guardar modelo (model.pkl)"):
-        with open("model.pkl", "wb") as f:
-            pickle.dump({"model": model, "scaler": scaler}, f)
-        st.success("Modelo guardado correctamente.")
-
-
+    st.subheader("Descargar modelo entrenado")
+    #convertir modelo para descargar
+    model_bytes = io.BytesIO()
+    pickle.dump({"model": model, "scaler": scaler}, model_bytes)
+    model_bytes.seek(0)
+    
+    st.download_button(
+        label = "📥 Descargar Model.pkl,
+        data = model_bytes,
+        file_name="model.pkl",
+        mime="application/octet-stream"
+)
 with col2:
     st.subheader("🔎 Análisis exploratorio")
 
